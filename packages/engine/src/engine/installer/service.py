@@ -1,18 +1,28 @@
 from pathlib import Path
+
+from core.filesystem.base import FileSystemProtocol
+from core.logging.logger import LoggerProtocol
+
 from engine.dependency_graph.models import InstallPlan
 from engine.downloader.service import DownloaderService
 from engine.validator.service import ManifestValidationService
-from core.logging.logger import LoggerProtocol
-from core.filesystem.base import FileSystemProtocol
-from .types import EventCallback
+
 from .events import EventBus
-from .verification import InstallationVerifier
 from .executor import InstallExecutor
 from .history import HistoryManager
 from .rollback import RollbackManager
+from .types import EventCallback
+from .verification import InstallationVerifier
+
 
 class InstallerService:
-    def __init__(self, logger: LoggerProtocol, fs: FileSystemProtocol, downloader: DownloaderService, validator: ManifestValidationService):
+    def __init__(
+        self,
+        logger: LoggerProtocol,
+        fs: FileSystemProtocol,
+        downloader: DownloaderService,
+        validator: ManifestValidationService,
+    ):
         self.logger = logger
         self.fs = fs
         self.bus = EventBus(logger)
@@ -41,6 +51,7 @@ class InstallerService:
         history_file = Path(project_dir) / ".lifeofpy" / "history.json"
         if self.fs.exists(history_file):
             import json
+
             return json.loads(self.fs.read_text(history_file))
         return {}
 

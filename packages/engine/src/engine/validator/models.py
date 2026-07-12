@@ -1,6 +1,8 @@
-from pydantic import BaseModel, Field
-from typing import List, Optional
 from datetime import datetime
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
+
 
 class ValidatorManifest(BaseModel):
     schemaVersion: str = Field(default="1.0.0")

@@ -1,5 +1,6 @@
 import typer
-from .commands import init, add, search, info, preview
+
+from .commands import add, info, init, preview, search
 
 app = typer.Typer(help="LifeOfPy Ecosystem CLI")
 

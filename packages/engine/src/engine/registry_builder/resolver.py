@@ -1,6 +1,9 @@
-from typing import List, Dict, Set
+from typing import List, Set
+
 from engine.validator.models import ValidatorManifest
+
 from .errors import ResolutionError
+
 
 class DependencyResolver:
     def resolve(self, manifests: List[ValidatorManifest]) -> List[ValidatorManifest]:
@@ -14,7 +17,7 @@ class DependencyResolver:
                 raise ResolutionError(f"Circular dependency detected involving '{slug}'")
             if slug in visited:
                 return
-            
+
             if slug not in manifest_map:
                 raise ResolutionError(f"Missing dependency: '{slug}'")
 
@@ -22,7 +25,7 @@ class DependencyResolver:
             manifest = manifest_map[slug]
             for dep in sorted(manifest.componentDependencies):
                 visit(dep)
-                
+
             path.remove(slug)
             visited.add(slug)
             resolved.append(manifest)

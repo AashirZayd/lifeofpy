@@ -1,6 +1,9 @@
-from typing import List, Callable
-from .models import ProgressEvent
+from typing import Callable, List
+
 from core.logging.logger import LoggerProtocol
+
+from .models import ProgressEvent
+
 
 class ProgressReporter:
     def __init__(self, logger: LoggerProtocol):

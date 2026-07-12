@@ -4,6 +4,7 @@ from .models import ValidatorManifest
 
 SUPPORTED_FRAMEWORKS = {"tkinter", "customtkinter", "pyside6", "pyqt6"}
 
+
 class FrameworkRule(ValidationRuleProtocol):
     @property
     def name(self) -> str:
@@ -15,7 +16,7 @@ class FrameworkRule(ValidationRuleProtocol):
                 code="VAL-FWK-001",
                 title="No Supported Frameworks",
                 description="The component must support at least one framework.",
-                suggestion="Add 'customtkinter' to supportedFrameworks."
+                suggestion="Add 'customtkinter' to supportedFrameworks.",
             )
             return
 
@@ -25,5 +26,5 @@ class FrameworkRule(ValidationRuleProtocol):
                     code="VAL-FWK-002",
                     title="Unsupported Framework",
                     description=f"Framework '{fwk}' is not supported.",
-                    suggestion=f"Must be one of: {', '.join(SUPPORTED_FRAMEWORKS)}"
+                    suggestion=f"Must be one of: {', '.join(SUPPORTED_FRAMEWORKS)}",
                 )

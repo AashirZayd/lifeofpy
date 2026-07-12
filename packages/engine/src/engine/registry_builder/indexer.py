@@ -1,5 +1,7 @@
-from typing import List, Dict
+from typing import Dict, List
+
 from engine.validator.models import ValidatorManifest
+
 
 class IndexGenerator:
     @staticmethod
@@ -11,15 +13,17 @@ class IndexGenerator:
         search_index = []
 
         for m in manifests:
-            search_index.append({
-                "id": m.slug,
-                "name": m.name,
-                "description": m.description,
-                "author": m.author,
-                "tags": m.tags,
-                "category": m.category,
-                "frameworks": m.supportedFrameworks
-            })
+            search_index.append(
+                {
+                    "id": m.slug,
+                    "name": m.name,
+                    "description": m.description,
+                    "author": m.author,
+                    "tags": m.tags,
+                    "category": m.category,
+                    "frameworks": m.supportedFrameworks,
+                }
+            )
 
             for f in m.supportedFrameworks:
                 if f not in framework_index:
@@ -45,5 +49,5 @@ class IndexGenerator:
             "category-index.json": category_index,
             "tag-index.json": tag_index,
             "author-index.json": author_index,
-            "search-index.json": {"entries": search_index}
+            "search-index.json": {"entries": search_index},
         }

@@ -1,5 +1,6 @@
 from .models import DownloadMetrics
 
+
 class MetricsCollector:
     def __init__(self):
         self.metrics = DownloadMetrics()
@@ -19,7 +20,8 @@ class MetricsCollector:
 
     def finish(self):
         import time
+
         self.metrics.end_time = time.time()
-        
+
     def get_metrics(self) -> dict:
         return self.metrics.model_dump()

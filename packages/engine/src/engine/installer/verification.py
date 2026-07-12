@@ -1,7 +1,11 @@
 from pathlib import Path
+
 from core.filesystem.base import FileSystemProtocol
+
 from engine.validator.service import ManifestValidationService
+
 from .errors import VerificationError
+
 
 class InstallationVerifier:
     def __init__(self, fs: FileSystemProtocol, validator: ManifestValidationService):
@@ -18,7 +22,7 @@ class InstallationVerifier:
             raise VerificationError(f"Component validation failed during staging: {error_msgs}")
 
         return True
-        
+
     def verify_installation(self, project_dir: Path, component_slug: str) -> bool:
         target = project_dir / "components" / component_slug
         if not self.fs.exists(target):

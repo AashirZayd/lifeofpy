@@ -1,7 +1,10 @@
 from typing import List
-from .types import EventCallback
-from .models import InstallEvent
+
 from core.logging.logger import LoggerProtocol
+
+from .models import InstallEvent
+from .types import EventCallback
+
 
 class EventBus:
     def __init__(self, logger: LoggerProtocol):

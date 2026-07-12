@@ -1,7 +1,10 @@
-from pydantic import BaseModel, Field
-from typing import List, Dict, Optional, Any
-from .types import DownloadId
 import time
+from typing import Optional
+
+from pydantic import BaseModel, Field
+
+from .types import DownloadId
+
 
 class DownloadRequest(BaseModel):
     id: DownloadId
@@ -9,6 +12,7 @@ class DownloadRequest(BaseModel):
     version: str
     expected_checksum: Optional[str] = None
     priority: int = 0
+
 
 class DownloadResult(BaseModel):
     id: DownloadId
@@ -19,12 +23,14 @@ class DownloadResult(BaseModel):
     error_message: Optional[str] = None
     checksum: Optional[str] = None
 
+
 class ProgressEvent(BaseModel):
     id: DownloadId
     status: str
     bytes_downloaded: int = 0
     total_bytes: int = 0
     message: Optional[str] = None
+
 
 class DownloadMetrics(BaseModel):
     total_downloads: int = 0
@@ -34,7 +40,7 @@ class DownloadMetrics(BaseModel):
     start_time: float = Field(default_factory=time.time)
     end_time: Optional[float] = None
     cache_hits: int = 0
-    
+
     @property
     def average_download_time(self) -> float:
         if self.total_downloads == 0 or not self.end_time:

@@ -1,11 +1,11 @@
-from typing import Optional
 from pathlib import Path
 import json
 from .base import RegistryProviderProtocol
-from .models import Registry, ComponentManifest, PackManifest, RegistryMetadata
+from .models import Registry, ComponentManifest, RegistryMetadata
 from .exceptions import RegistryUnavailableError, ComponentNotFoundError, ManifestNotFoundError
 from ..logging.logger import LoggerProtocol
 from ..filesystem.base import FileSystemProtocol
+
 
 class LocalProvider(RegistryProviderProtocol):
     def __init__(self, logger: LoggerProtocol, fs: FileSystemProtocol, registry_dir: Path):
@@ -25,14 +25,14 @@ class LocalProvider(RegistryProviderProtocol):
             data = self._read_json("registry.json")
             return Registry.model_validate(data)
         except Exception as e:
-            raise RegistryUnavailableError(f"Failed to read local registry: {e}")
+            raise RegistryUnavailableError(f"Failed to read local registry: {e}") from e
 
     def get_manifest(self, slug: str) -> ComponentManifest:
         try:
             data = self._read_json(f"components/{slug}/manifest.json")
             return ComponentManifest.model_validate(data)
         except Exception as e:
-            raise ManifestNotFoundError(f"Local manifest for {slug} not found: {e}")
+            raise ManifestNotFoundError(f"Local manifest for {slug} not found: {e}") from e
 
     def get_component(self, slug: str) -> ComponentManifest:
         return self.get_manifest(slug)
@@ -40,16 +40,16 @@ class LocalProvider(RegistryProviderProtocol):
     def download_component(self, slug: str, dest_dir: Path) -> Path:
         self.logger.info(f"Copying component {slug} locally to {dest_dir}")
         src_dir = self.registry_dir / "components" / slug
-        
+
         if not self.fs.exists(src_dir):
             raise ComponentNotFoundError(f"Component source not found at {src_dir}")
-            
+
         if not self.fs.exists(dest_dir):
             self.fs.create_directory(dest_dir, parents=True)
-            
-        with self.fs.transaction() as tx:
+
+        with self.fs.transaction():
             self.fs.copy(src_dir, dest_dir)
-            
+
         return dest_dir
 
     def download_pack(self, slug: str, dest_dir: Path) -> Path:

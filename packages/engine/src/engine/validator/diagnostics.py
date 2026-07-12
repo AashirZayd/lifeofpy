@@ -1,11 +1,14 @@
 from enum import Enum
-from typing import Optional, List
+from typing import List, Optional
+
 from pydantic import BaseModel
+
 
 class Severity(str, Enum):
     ERROR = "ERROR"
     WARNING = "WARNING"
     INFO = "INFO"
+
 
 class Diagnostic(BaseModel):
     severity: Severity
@@ -16,6 +19,7 @@ class Diagnostic(BaseModel):
     file: Optional[str] = None
     line: Optional[int] = None
     doc_link: Optional[str] = None
+
 
 class DiagnosticsReport:
     def __init__(self):

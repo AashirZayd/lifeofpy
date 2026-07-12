@@ -1,7 +1,9 @@
-from typing import List, Set, Dict
+from typing import List, Set
+
+from .errors import CycleDetectedError
 from .graph import DependencyGraph
 from .types import NodeId
-from .errors import CycleDetectedError
+
 
 class TopologicalSorter:
     def sort(self, graph: DependencyGraph) -> List[NodeId]:
@@ -14,10 +16,10 @@ class TopologicalSorter:
                 raise CycleDetectedError(f"Cannot sort graph with cycles at {node}")
             if node not in visited:
                 temp_mark.add(node)
-                
+
                 for neighbor in sorted(graph.get_dependencies(node)):
                     visit(neighbor)
-                    
+
                 temp_mark.remove(node)
                 visited.add(node)
                 result.append(node)

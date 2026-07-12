@@ -1,21 +1,24 @@
-from typing import List
-from datetime import datetime, timezone
 import hashlib
 import json
+from datetime import datetime, timezone
+from typing import List
+
+from core.registry.models import Checksum, RegistryMetadata
+
 from engine.validator.models import ValidatorManifest
-from core.registry.models import RegistryMetadata, Checksum
+
 
 class MetadataGenerator:
     @staticmethod
     def generate(manifests: List[ValidatorManifest], version: str = "1.0.0") -> RegistryMetadata:
         frameworks = set()
         categories = set()
-        
+
         for m in manifests:
             frameworks.update(m.supportedFrameworks)
             categories.add(m.category)
 
-        raw_data = json.dumps([m.model_dump() for m in manifests], sort_keys=True).encode('utf-8')
+        raw_data = json.dumps([m.model_dump() for m in manifests], sort_keys=True).encode("utf-8")
         sha = hashlib.sha256(raw_data).hexdigest()
 
         return RegistryMetadata(
@@ -26,5 +29,5 @@ class MetadataGenerator:
             componentCount=len(manifests),
             frameworkCount=len(frameworks),
             categoryCount=len(categories),
-            checksum=Checksum(sha256=sha)
+            checksum=Checksum(sha256=sha),
         )

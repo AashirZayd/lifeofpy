@@ -1,6 +1,8 @@
-from pathlib import Path
 import tempfile
+from pathlib import Path
+
 from core.filesystem.base import FileSystemProtocol
+
 
 class StagingArea:
     def __init__(self, fs: FileSystemProtocol):
@@ -19,6 +21,6 @@ class StagingArea:
         stage_dir = self.base_dir / component_slug
         if self.fs.exists(stage_dir):
             self.fs.delete_directory(stage_dir, recursive=True)
-            
+
     def get_staged_path(self, component_slug: str) -> Path:
         return self.base_dir / component_slug

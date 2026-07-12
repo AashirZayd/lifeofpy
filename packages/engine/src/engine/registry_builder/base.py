@@ -1,6 +1,8 @@
-from typing import Protocol, List, Dict
 from pathlib import Path
+from typing import Dict, List, Protocol
+
 from engine.validator.models import ValidatorManifest
+
 
 class RegistryBuilderProtocol(Protocol):
     def build_registry(self, source_dir: Path | str, output_dir: Path | str) -> Path: ...

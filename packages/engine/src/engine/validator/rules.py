@@ -1,7 +1,9 @@
-from typing import List, Any
+from typing import Any, List
+
 from .base import ValidationRuleProtocol
 from .diagnostics import DiagnosticsReport
 from .models import ValidatorManifest
+
 
 class RuleEngine:
     def __init__(self):
@@ -12,7 +14,7 @@ class RuleEngine:
 
     def execute_manifest_rules(self, manifest: ValidatorManifest, report: DiagnosticsReport):
         for rule in self.rules:
-            if hasattr(rule, 'validate'):
+            if hasattr(rule, "validate"):
                 try:
                     if rule.name != "FolderStructureRule":
                         rule.validate(manifest, report)
@@ -20,7 +22,7 @@ class RuleEngine:
                     report.add_error(
                         code="VAL-SYS-001",
                         title="Rule Execution Failed",
-                        description=f"Rule {rule.name} failed to execute: {e}"
+                        description=f"Rule {rule.name} failed to execute: {e}",
                     )
 
     def execute_structure_rules(self, dir_path: Any, report: DiagnosticsReport):

@@ -1,9 +1,11 @@
-from pydantic import BaseModel, Field, HttpUrl
-from typing import List, Dict, Optional, Any
+from pydantic import BaseModel, Field
+from typing import List, Dict, Optional
 from datetime import datetime
+
 
 class Checksum(BaseModel):
     sha256: str
+
 
 class RegistryMetadata(BaseModel):
     registryVersion: str
@@ -15,17 +17,21 @@ class RegistryMetadata(BaseModel):
     categoryCount: int
     checksum: Checksum
 
+
 class Framework(BaseModel):
     id: str
     name: str
+
 
 class Category(BaseModel):
     id: str
     name: str
 
+
 class Tag(BaseModel):
     id: str
     name: str
+
 
 class ComponentManifest(BaseModel):
     schemaVersion: str = Field(default="1.0.0")
@@ -44,6 +50,7 @@ class ComponentManifest(BaseModel):
     demo: Optional[str] = None
     checksums: Optional[Dict[str, str]] = None
 
+
 class PackManifest(BaseModel):
     id: str
     name: str
@@ -51,6 +58,7 @@ class PackManifest(BaseModel):
     components: List[str]
     author: str
     version: str
+
 
 class SearchIndexEntry(BaseModel):
     id: str
@@ -61,8 +69,10 @@ class SearchIndexEntry(BaseModel):
     category: str
     frameworks: List[str]
 
+
 class SearchIndex(BaseModel):
     entries: List[SearchIndexEntry]
+
 
 class Registry(BaseModel):
     version: str

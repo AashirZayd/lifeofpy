@@ -1,13 +1,16 @@
-from typing import Protocol, Any
 from pathlib import Path
+from typing import Any, Protocol
+
 from .diagnostics import DiagnosticsReport
 from .models import ValidatorManifest
+
 
 class ValidationRuleProtocol(Protocol):
     @property
     def name(self) -> str: ...
-    
+
     def validate(self, target: Any, report: DiagnosticsReport) -> None: ...
+
 
 class ManifestValidationEngineProtocol(Protocol):
     def validate_manifest(self, manifest_data: dict) -> DiagnosticsReport: ...

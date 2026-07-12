@@ -1,6 +1,8 @@
 from typing import Dict, List, Optional
-from .models import DependencyNode, DependencyEdge
+
+from .models import DependencyEdge, DependencyNode
 from .types import NodeId
+
 
 class DependencyGraph:
     def __init__(self):
@@ -21,6 +23,6 @@ class DependencyGraph:
 
     def get_node(self, node_id: NodeId) -> Optional[DependencyNode]:
         return self.nodes.get(node_id)
-        
+
     def get_dependencies(self, node_id: NodeId) -> List[NodeId]:
         return self.adjacency_list.get(node_id, [])

@@ -1,8 +1,10 @@
-from pathlib import Path
 import hashlib
+from pathlib import Path
 from typing import Dict
+
 from core.filesystem.base import FileSystemProtocol
 from core.logging.logger import LoggerProtocol
+
 
 class ChecksumGenerator:
     def __init__(self, logger: LoggerProtocol, fs: FileSystemProtocol):
@@ -13,13 +15,13 @@ class ChecksumGenerator:
         checksums = {}
         if not self.fs.exists(directory):
             return checksums
-            
+
         files = sorted([f for f in Path(directory).rglob("*") if f.is_file()])
-        
+
         for f in files:
             if f.name == "checksums.json":
                 continue
-                
+
             try:
                 content = self.fs.read_bytes(f)
                 sha = hashlib.sha256(content).hexdigest()
@@ -27,5 +29,5 @@ class ChecksumGenerator:
                 checksums[rel_path] = sha
             except Exception as e:
                 self.logger.warning(f"Failed to checksum {f}: {e}")
-                
+
         return checksums

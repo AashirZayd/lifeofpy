@@ -1,5 +1,6 @@
 import pytest
-from manifest_validator.validator import validate_component_manifest, ManifestValidationError
+from manifest_validator.validator import ManifestValidationError, validate_component_manifest
+
 
 def test_valid_manifest():
     data = {
@@ -10,11 +11,12 @@ def test_valid_manifest():
         "author": "aashir",
         "license": "MIT",
         "supported_frameworks": ["customtkinter"],
-        "category": "Tests"
+        "category": "Tests",
     }
     manifest = validate_component_manifest(data)
     assert manifest.id == "test-id"
-    
+
+
 def test_invalid_manifest():
     with pytest.raises(ManifestValidationError):
         validate_component_manifest({})

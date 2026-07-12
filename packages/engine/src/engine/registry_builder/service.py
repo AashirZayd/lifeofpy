@@ -1,14 +1,17 @@
 from pathlib import Path
-from typing import List, Dict
-from core.logging.logger import LoggerProtocol
+from typing import Dict, List
+
 from core.filesystem.base import FileSystemProtocol
+from core.logging.logger import LoggerProtocol
+
 from engine.validator.models import ValidatorManifest
 
 from .base import RegistryBuilderProtocol
-from .pipeline import RegistryPipeline
-from .indexer import IndexGenerator
-from .statistics import StatisticsGenerator
 from .checksums import ChecksumGenerator
+from .indexer import IndexGenerator
+from .pipeline import RegistryPipeline
+from .statistics import StatisticsGenerator
+
 
 class RegistryBuilderService(RegistryBuilderProtocol):
     def __init__(self, logger: LoggerProtocol, fs: FileSystemProtocol):

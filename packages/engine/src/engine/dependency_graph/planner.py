@@ -1,7 +1,7 @@
-from typing import List
+from .errors import PlanningError
 from .models import InstallPlan, InstallPlanStage, ResolutionResult
 from .sorter import TopologicalSorter
-from .errors import PlanningError
+
 
 class InstallationPlanner:
     def __init__(self, sorter: TopologicalSorter):
@@ -12,6 +12,7 @@ class InstallationPlanner:
             raise PlanningError("Cannot generate install plan from a resolution with errors.")
 
         from .graph import DependencyGraph
+
         graph = DependencyGraph()
         for node in resolution.resolved_nodes:
             graph.add_node(node)
@@ -21,7 +22,7 @@ class InstallationPlanner:
         try:
             sorted_nodes = self.sorter.sort(graph)
         except Exception as e:
-            raise PlanningError(f"Failed to sort dependencies: {e}")
+            raise PlanningError(f"Failed to sort dependencies: {e}") from e
 
         stages = [
             InstallPlanStage(name="Resolve", components=[]),
@@ -30,8 +31,4 @@ class InstallationPlanner:
             InstallPlanStage(name="Verify", components=sorted_nodes.copy()),
         ]
 
-        return InstallPlan(
-            stages=stages,
-            total_components=len(sorted_nodes),
-            diagnostics=resolution.diagnostics
-        )
+        return InstallPlan(stages=stages, total_components=len(sorted_nodes), diagnostics=resolution.diagnostics)

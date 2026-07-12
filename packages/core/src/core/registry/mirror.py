@@ -1,12 +1,14 @@
-from typing import List, Optional
+from typing import List
 from pathlib import Path
 from .base import RegistryProviderProtocol
 from .models import Registry, ComponentManifest, RegistryMetadata
-from .exceptions import RegistryUnavailableError, ComponentNotFoundError
+from .exceptions import RegistryUnavailableError
 from ..logging.logger import LoggerProtocol
+
 
 class MirrorProvider(RegistryProviderProtocol):
     """A provider that attempts multiple backend providers in sequence (Failover)."""
+
     def __init__(self, logger: LoggerProtocol, providers: List[RegistryProviderProtocol]):
         if not providers:
             raise ValueError("MirrorProvider requires at least one backend provider")
@@ -17,14 +19,18 @@ class MirrorProvider(RegistryProviderProtocol):
         last_exception = None
         for i, provider in enumerate(self.providers):
             try:
-                self.logger.debug(f"Mirror attempting {func_name} on provider {i+1}/{len(self.providers)}")
+                self.logger.debug(
+                    f"Mirror attempting {func_name} on provider {i + 1}/{len(self.providers)}"
+                )
                 func = getattr(provider, func_name)
                 return func(*args, **kwargs)
             except Exception as e:
-                self.logger.warning(f"Mirror provider {i+1} failed for {func_name}: {e}")
+                self.logger.warning(f"Mirror provider {i + 1} failed for {func_name}: {e}")
                 last_exception = e
-                
-        raise RegistryUnavailableError(f"All mirror providers failed for {func_name}. Last error: {last_exception}")
+
+        raise RegistryUnavailableError(
+            f"All mirror providers failed for {func_name}. Last error: {last_exception}"
+        )
 
     def get_registry(self) -> Registry:
         return self._execute_with_failover("get_registry")

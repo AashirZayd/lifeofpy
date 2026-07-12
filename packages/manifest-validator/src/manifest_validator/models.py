@@ -1,6 +1,8 @@
-from pydantic import BaseModel, Field, HttpUrl
-from typing import List, Optional
 from datetime import datetime
+from typing import List, Optional
+
+from pydantic import BaseModel, Field, HttpUrl
+
 
 class ComponentManifest(BaseModel):
     schemaVersion: str = Field(default="1.0.0")
@@ -23,6 +25,7 @@ class ComponentManifest(BaseModel):
     preview: Optional[str] = Field(None, description="Path to preview image")
     demo: Optional[str] = Field(None, description="Path to demo script")
     checksum: Optional[str] = None
+
 
 class PackManifest(BaseModel):
     schemaVersion: str = Field(default="1.0.0")

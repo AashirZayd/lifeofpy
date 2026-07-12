@@ -1,12 +1,15 @@
-from typing import List, Dict
+from typing import Dict, List
+
 from core.logging.logger import LoggerProtocol
-from .models import DependencyNode, ResolutionResult, InstallPlan
-from .resolver import DependencyResolver
-from .planner import InstallationPlanner
-from .cycles import CycleDetector
+
 from .conflicts import ConflictDetector
-from .sorter import TopologicalSorter
+from .cycles import CycleDetector
 from .graph import DependencyGraph
+from .models import DependencyNode, InstallPlan, ResolutionResult
+from .planner import InstallationPlanner
+from .resolver import DependencyResolver
+from .sorter import TopologicalSorter
+
 
 class DependencyGraphService:
     def __init__(self, logger: LoggerProtocol):
@@ -17,7 +20,12 @@ class DependencyGraphService:
         self.sorter = TopologicalSorter()
         self.planner = InstallationPlanner(self.sorter)
 
-    def resolve(self, requested_nodes: List[DependencyNode], available_nodes: Dict[str, DependencyNode], target_framework: str = None) -> ResolutionResult:
+    def resolve(
+        self,
+        requested_nodes: List[DependencyNode],
+        available_nodes: Dict[str, DependencyNode],
+        target_framework: str = None,
+    ) -> ResolutionResult:
         self.logger.info("Resolving dependencies")
         return self.resolver.resolve(requested_nodes, available_nodes, target_framework)
 

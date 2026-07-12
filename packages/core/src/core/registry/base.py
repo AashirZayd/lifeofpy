@@ -1,6 +1,7 @@
-from typing import Protocol, Optional
+from typing import Protocol
 from pathlib import Path
-from .models import Registry, ComponentManifest, PackManifest, RegistryMetadata
+from .models import Registry, ComponentManifest, RegistryMetadata
+
 
 class RegistryProviderProtocol(Protocol):
     def get_registry(self) -> Registry: ...

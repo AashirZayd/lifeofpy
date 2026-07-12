@@ -1,6 +1,9 @@
 from pathlib import Path
+
 from core.filesystem.base import FileSystemProtocol
+
 from .errors import ProjectLockedError, TransactionError
+
 
 class TransactionManager:
     def __init__(self, fs: FileSystemProtocol):
@@ -13,7 +16,7 @@ class TransactionManager:
         try:
             self.fs.write_text_atomic(lock_file, "LOCKED")
         except Exception as e:
-            raise TransactionError(f"Failed to acquire project lock: {e}")
+            raise TransactionError(f"Failed to acquire project lock: {e}") from e
 
     def release_lock(self, project_dir: Path):
         lock_file = project_dir / ".lifeofpy.lock.pid"
@@ -21,4 +24,4 @@ class TransactionManager:
             try:
                 self.fs.delete_file(lock_file)
             except Exception as e:
-                raise TransactionError(f"Failed to release project lock: {e}")
+                raise TransactionError(f"Failed to release project lock: {e}") from e

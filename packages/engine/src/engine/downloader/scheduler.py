@@ -1,8 +1,10 @@
 from typing import List
-from .models import DownloadRequest, DownloadResult
+
+from .errors import CancellationError
+from .models import DownloadResult
 from .queue import QueueManager
 from .worker import DownloadWorker
-from .errors import CancellationError
+
 
 class DownloadScheduler:
     def __init__(self, queue: QueueManager, worker: DownloadWorker):
@@ -15,12 +17,12 @@ class DownloadScheduler:
         while not self.queue.is_empty:
             if self.cancelled:
                 raise CancellationError("Download scheduler was cancelled.")
-                
+
             request = self.queue.dequeue()
             if request:
                 result = self.worker.execute(request)
                 results.append(result)
-                
+
         return results
 
     def cancel_all(self):

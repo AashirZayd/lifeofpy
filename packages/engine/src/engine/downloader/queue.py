@@ -1,5 +1,7 @@
 from typing import List, Optional
+
 from .models import DownloadRequest
+
 
 class QueueManager:
     def __init__(self):
@@ -13,7 +15,7 @@ class QueueManager:
         if self.queue:
             return self.queue.pop(0)
         return None
-        
+
     def cancel(self, request_id: str):
         self.queue = [req for req in self.queue if req.id != request_id]
 

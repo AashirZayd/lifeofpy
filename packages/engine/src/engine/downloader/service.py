@@ -1,11 +1,13 @@
-from typing import List, Callable
-from core.registry.base import RegistryProviderProtocol
+import uuid
+from typing import Callable, List
+
 from core.filesystem.base import FileSystemProtocol
 from core.logging.logger import LoggerProtocol
+from core.registry.base import RegistryProviderProtocol
 
-from .models import DownloadRequest, DownloadResult, ProgressEvent
 from .manager import DownloadManager
-import uuid
+from .models import DownloadRequest, DownloadResult, ProgressEvent
+
 
 class DownloaderService:
     def __init__(self, provider: RegistryProviderProtocol, fs: FileSystemProtocol, logger: LoggerProtocol):
@@ -16,17 +18,21 @@ class DownloaderService:
 
     def download(self, component_slug: str, version: str, expected_checksum: str = None) -> DownloadResult:
         req = DownloadRequest(
-            id=str(uuid.uuid4()),
-            component_slug=component_slug,
-            version=version,
-            expected_checksum=expected_checksum
+            id=str(uuid.uuid4()), component_slug=component_slug, version=version, expected_checksum=expected_checksum
         )
         self.manager.queue.enqueue(req)
         results = self.manager.scheduler.schedule()
         self.manager.metrics.finish()
         if results:
             return results[0]
-        return DownloadResult(id=req.id, component_slug=component_slug, staged_path="", bytes_downloaded=0, success=False, error_message="Cancelled")
+        return DownloadResult(
+            id=req.id,
+            component_slug=component_slug,
+            staged_path="",
+            bytes_downloaded=0,
+            success=False,
+            error_message="Cancelled",
+        )
 
     def download_batch(self, components: List[dict]) -> List[DownloadResult]:
         for comp in components:
@@ -34,10 +40,10 @@ class DownloaderService:
                 id=str(uuid.uuid4()),
                 component_slug=comp["slug"],
                 version=comp.get("version", "latest"),
-                expected_checksum=comp.get("checksum")
+                expected_checksum=comp.get("checksum"),
             )
             self.manager.queue.enqueue(req)
-            
+
         results = self.manager.scheduler.schedule()
         self.manager.metrics.finish()
         return results

@@ -1,5 +1,7 @@
 from typing import List
+
 from engine.validator.models import ValidatorManifest
+
 
 class StatisticsGenerator:
     @staticmethod
@@ -21,5 +23,5 @@ class StatisticsGenerator:
             "componentsPerCategory": cat_counts,
             "averageDependencies": round(total_deps / total, 2) if total > 0 else 0,
             "packCount": 0,
-            "themeCount": 0
+            "themeCount": 0,
         }
