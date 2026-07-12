@@ -18,3 +18,6 @@ target-version = "py312"
 [tool.pytest.ini_options]
 addopts = "--cov=core --cov-report=term-missing"
 testpaths = ["tests"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/core"]

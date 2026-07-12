@@ -55,6 +55,8 @@ def logger():
 def fs(logger, tmp_path):
     class MockFS(FileSystemService):
         def exists(self, path: Path) -> bool:
+            if ".lifeofpy.lock.pid" in str(path):
+                return False
             return True
         def create_directory(self, path: Path, parents: bool = False):
             pass

@@ -3,3 +3,10 @@ name = "lifeofpy-preview"
 version = "0.1.0"
 description = "Preview image generator architecture"
 requires-python = ">=3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/preview_generator"]
