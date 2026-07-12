@@ -1,0 +1,5 @@
+[project]
+name = "lifeofpy-search-indexer"
+version = "0.1.0"
+description = "Static JSON index generator"
+requires-python = ">=3.10"

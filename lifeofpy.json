@@ -1,0 +1,5 @@
+{
+  "registryVersion": "v1",
+  "experimentalFeatures": false,
+  "defaultFramework": "customtkinter"
+}

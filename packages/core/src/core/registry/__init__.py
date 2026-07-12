@@ -1,0 +1,1 @@
+"""LifeOfPy Registry Module"""

@@ -1,0 +1,5 @@
+[project]
+name = "lifeofpy-preview"
+version = "0.1.0"
+description = "Preview image generator architecture"
+requires-python = ">=3.10"

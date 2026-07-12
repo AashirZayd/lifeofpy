@@ -1,0 +1,8 @@
+[project]
+name = "lifeofpy-manifest-validator"
+version = "0.1.0"
+description = "Strict Pydantic schemas for LifeOfPy manifests"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.0.0"
+]

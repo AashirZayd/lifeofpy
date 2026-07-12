@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "button-01",
+  "name": "Gradient Outline Button",
+  "description": "A sleek, dark-mode gradient outline button with hover effects.",
+  "version": "1.0.0",
+  "author": "lifeofpy",
+  "license": "MIT",
+  "supported_frameworks": [
+    "customtkinter"
+  ],
+  "category": "Buttons",
+  "tags": [
+    "button",
+    "gradient"
+  ],
+  "preview": "preview.webp",
+  "demo": "demo.py"
+}

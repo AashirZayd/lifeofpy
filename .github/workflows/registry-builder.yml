@@ -1,0 +1,36 @@
+name: Registry Builder CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+        
+    - name: Install uv
+      run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      
+    - name: Install Dependencies
+      run: uv sync
+      
+    - name: Run Tests
+      run: uv run pytest tests/
+      
+    - name: Build Static Registry
+      run: uv run python -m registry_builder.builder
+      
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: static-registry
+        path: registry-output/

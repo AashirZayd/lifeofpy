@@ -1,0 +1,2 @@
+class CleanupService:
+    pass

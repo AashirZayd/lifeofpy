@@ -1,0 +1,20 @@
+[project]
+name = "lifeofpy-core"
+version = "0.1.0"
+description = "LifeOfPy Core Package - FileSystem, Logging, and Utilities"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.0.0"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.pytest.ini_options]
+addopts = "--cov=core --cov-report=term-missing"
+testpaths = ["tests"]

@@ -1,0 +1,16 @@
+[project]
+name = "lifeofpy-cli"
+version = "0.1.0"
+description = "LifeOfPy CLI"
+requires-python = ">=3.10"
+dependencies = [
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "lifeofpy-engine"
+]
+
+[project.scripts]
+lifeofpy = "cli.main:app"
+
+[tool.uv.sources]
+lifeofpy-engine = { workspace = true }

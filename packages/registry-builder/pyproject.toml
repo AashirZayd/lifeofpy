@@ -1,0 +1,17 @@
+[project]
+name = "lifeofpy-registry-builder"
+version = "0.1.0"
+description = "Orchestrator for validating and building the static registry"
+requires-python = ">=3.10"
+dependencies = [
+    "lifeofpy-engine",
+    "lifeofpy-manifest-validator",
+    "lifeofpy-search-indexer",
+    "lifeofpy-checksum"
+]
+
+[tool.uv.sources]
+lifeofpy-engine = { workspace = true }
+lifeofpy-manifest-validator = { workspace = true }
+lifeofpy-search-indexer = { workspace = true }
+lifeofpy-checksum = { workspace = true }

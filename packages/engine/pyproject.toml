@@ -1,0 +1,11 @@
+[project]
+name = "lifeofpy-engine"
+version = "0.1.0"
+description = "Core ecosystem engine for LifeOfPy"
+requires-python = ">=3.10"
+dependencies = [
+    "lifeofpy-manifest-validator"
+]
+
+[tool.uv.sources]
+lifeofpy-manifest-validator = { workspace = true }
