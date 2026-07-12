@@ -4,6 +4,13 @@ version = "0.1.0"
 description = "LifeOfPy Monorepo Workspace"
 requires-python = ">=3.12"
 
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.2.0",
+]
+
 [tool.uv.workspace]
 members = ["packages/*"]
 
