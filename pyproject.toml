@@ -2,7 +2,39 @@
 name = "lifeofpy-workspace"
 version = "0.1.0"
 description = "LifeOfPy Monorepo Workspace"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 
 [tool.uv.workspace]
 members = ["packages/*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+exclude = [
+    ".git",
+    ".github",
+    ".ruff_cache",
+    ".venv",
+    "__pycache__",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+ignore = [
+    "E501",  # line too long, handled by formatter
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q --tb=short"
+testpaths = [
+    "packages/engine/tests",
+    "packages/core/tests",
+]
